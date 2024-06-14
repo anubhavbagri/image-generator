@@ -8,12 +8,17 @@ const openai = new OpenAI({
 });
 
 const generateImage = async (req, res) => {
+  const { prompt, size } = req.body;
+
+  const imageSize =
+    size === 'small' ? '256x256' : size === 'medium' ? '256x256' : '256x256';
+
   try {
     const response = await openai.images.generate({
       //   model: 'dall-e-3',
-      prompt: 'polar bear drinking beer with friends',
+      prompt,
       n: 1,
-      size: '256x256',
+      size: imageSize,
     });
 
     const imageUrl = response.data[0].url;
